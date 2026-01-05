@@ -30,8 +30,8 @@ Task difficulty is controlled via:
 # 🧠 Models
 
 We study transformer variants with:
-	- attention-only blocks (no MLP)
-	-	standard transformer blocks (with MLP)
+- **Attention-only** models (no MLP layers)
+- **Standard** transformer blocks (attention + MLP)
 
 This allows direct comparison of how architectural expressivity affects training geometry.
 
@@ -47,7 +47,7 @@ This allows direct comparison of how architectural expressivity affects training
   - Attention parameters remain in higher-dimensional space
   - Generalization performance degrades under the same training budget
   - This indicates tight coupling between attention-based routing and computation pathways
-- Strict curriculum learning reliably achieves grokking; an open question is whether it converges to the **same** low-dimensional submanifold as mixed-data training.
+- Under strict curriculum learning, performance on smaller values of m degrades as training progresses to larger m, indicating path-dependent forgetting consistent with movement along a low-dimensional solution manifold.
 
 # 📐 Analysis Tools
 
@@ -69,7 +69,7 @@ Dependencies are standard PyTorch / NumPy / matplotlib.
 
 Typical Usage
 ```bash
-python groking_v3.py
+python train.py
 ```
 
 # 📈 Analysis
@@ -85,7 +85,6 @@ python analysis_alignment.py
 This work opens several promising directions for future investigation:
 
 - How does the intrinsic dimension of the learned manifold scale with architectural expressivity (e.g., deeper/wider models, larger embedding size)?
-- Do curriculum-trained and mixed-data-trained models converge to the **same** low-dimensional attractor, or to distinct but equally effective submanifolds?
 - Can early-training low-dimensional diagnostics (e.g., subspace distance or effective rank) reliably **predict** eventual grokking success?
 - How do these collapse and bubbling phenomena behave as model depth and width increase—does the effective dimension remain bounded, or grow slowly?
 
