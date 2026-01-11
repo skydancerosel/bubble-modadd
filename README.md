@@ -1,5 +1,5 @@
- ### bubble-modadd  
- **Learning Geometry and Training Dynamics**
+# **bubble-modadd**  
+***Learning Geometry and Training Dynamics***  
 > 
 > ### Main Results (TL;DR)
 >
