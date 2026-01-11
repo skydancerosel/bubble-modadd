@@ -75,11 +75,22 @@ This allows direct comparison of how architectural expressivity affects training
    - robust for moderate task difficulty (e.g. `m ≤ 4`)  
 
    The phenomenon reflects a deep constraint on **learning dynamics**, not the result of explicit regularization or pruning.
+<!-- Optional: centered version with caption -->
+<p align="center">
+  <img src="plots/figure1_intrinsic_dim.png" width="70%" alt="PCA of attention weights showing collapse to low dimension">
+  <br>
+</p>
 
 2. **Attention Bubbling as Geometric Saturation**  
    Sharp attention concentration (“**attention bubbles**”) emerges naturally as **saturation** along a routing coordinate within the reduced execution manifold.  
 
    Bubbling is **not** a discrete architectural quirk, but rather the continuous projection of movement along a low-dimensional learning trajectory.
+<!-- Optional: centered version with caption -->
+<p align="center">
+  <img src="plots/figure2_entropy_bubbling.png" width="70%" alt="PCA of attention weights showing collapse to low dimension">
+  <br>
+</p>
+   
 
 3. **Non-Integrability of SGD and Commutator Analysis**  
    Despite the dramatic dimensional collapse, SGD updates remain **strongly non-commutative** in the full high-dimensional parameter space.  
@@ -94,6 +105,11 @@ This allows direct comparison of how architectural expressivity affects training
    **Crucially**: When commutators are projected onto the learned execution subspace, their magnitude becomes **negligible**.  
    → SGD dynamics are **approximately integrable** along execution directions  
    → Non-integrability is confined to the vast orthogonal “staging” directions.
+   <!-- Optional: centered version with caption -->
+ <p align="center">
+   <img src="plots/figure3_commutator_raw.png" width="70%" alt="PCA of attention weights showing collapse to low dimension">
+   <br>
+ </p>
 
 4. **Localization of Noncommutativity**  
    Decomposing commutators into:  
@@ -106,6 +122,14 @@ This allows direct comparison of how architectural expressivity affects training
 
    This suggests a fundamental geometric role for overparameterization:  
    extra dimensions **absorb optimization interference** without disrupting the core execution computation.
+   <p align="center">
+   <img src="plots/figure4_comm_ratio.png" width="70%" alt="PCA of attention weights showing collapse to low dimension">
+   <br>
+  </p>
+    <p align="center">
+    <img src="plots/figure5_comm_decomposition.png" width="70%" alt="PCA of attention weights showing collapse to low dimension">
+    <br>
+   </p>
 
 5. **Sparse Autoencoders as Supporting Evidence**  
    We train sparse autoencoders (SAEs) on intermediate activations to probe internal representations.  
@@ -120,8 +144,12 @@ This allows direct comparison of how architectural expressivity affects training
    - Execution remains **distributed** across the low-dimensional manifold  
 
    → SAEs highlight a clean separation between **execution geometry** and **auxiliary routing / staging structure**.
+   <p align="center">
+       <img src="plots/figure6_sae_ablation.png" width="60%" alt="PCA of attention weights showing collapse to low dimension">
+   <br>
+   </p>
 
-6. **Architectural Sensitivity**  
+7. **Architectural Sensitivity**  
    Adding MLP layers **disrupts** the low-dimensional geometric picture:  
    - Attention parameters no longer collapse to low dimension  
    - Training dynamics remain **higher-dimensional**  
@@ -129,7 +157,7 @@ This allows direct comparison of how architectural expressivity affects training
 
    This indicates a tight coupling between **attention-based routing** and low-dimensional execution dynamics.
 
-7. **Path Dependence and Forgetting**  
+8. **Path Dependence and Forgetting**  
    Under strict curriculum learning (progressively increasing `m`):  
    - Performance on **smaller m** degrades as training advances to larger `m`  
    - Despite the model having **sufficient capacity**  
