@@ -165,6 +165,61 @@ This allows direct comparison of how architectural expressivity affects training
 
    This behavior is consistent with **path-dependent** movement along a low-dimensional solution manifold, rather than independent memorization of each task variant.
 
+## Core Geometric Principle: The Execution Manifold as an Integrable Subspace
+
+Despite operating in high-dimensional parameter space (d=128), transformers 
+converge to a 2-3D "execution manifold" where:
+
+1. **Dimensional Collapse**: Attention parameters collapse onto this 
+   low-dimensional subspace across all layers, seeds, and moderate task 
+   difficulties (m ≤ 6)
+
+2. **Approximate Integrability**: When SGD commutators [θ_AB - θ_BA] are 
+   projected onto the execution manifold, their magnitude becomes negligible
+   
+   → SGD is approximately integrable along execution directions
+   → Non-integrability is confined to orthogonal "staging" directions
+
+3. **Geometric Role of Overparameterization**: The vast orthogonal space 
+   absorbs optimization interference without disrupting core computation
+
+## Theoretical Interpretation
+
+This empirical picture suggests a novel view of neural network learning:
+
+**Overparameterization enables parallel micro-task learning**: High 
+dimensionality allows the model to explore many local solutions 
+simultaneously in "staging" directions without interference.
+
+**Grokking as projection onto the execution manifold**: The phase 
+transition corresponds to discovering the low-dimensional integrable 
+subspace where compositional operations commute.
+
+**Mixed vs Curriculum learning**: Mixed training forces discovery of the 
+unified execution manifold. Curriculum learning gets trapped in 
+task-specific regions of the staging space, leading to catastrophic 
+forgetting.
+
+This framework connects to dynamical systems theory: the execution manifold 
+is an attractor in the learning dynamics, analogous to stable solutions in 
+nonlinear PDEs.
+
+## Implications for Interpretability and Safety
+
+1. **When to interpret**: Sparse features (SAE-recoverable) matter early; 
+   geometric structure matters late
+   
+2. **Where to interpret**: Focus on the execution manifold, not the full 
+   parameter space
+   
+3. **How to train**: Mixed-task training may be crucial for discovering 
+   compositional structure
+   
+4. **Scaling hypothesis**: If this pattern holds for complex tasks, 
+   powerful models may also use low-dimensional execution manifolds - 
+   offering hope for interpretability at scale
+
+
 # 📐 Analysis Tools
 
 This repository provides a suite of diagnostic tools to analyze training dynamics and representations:
