@@ -73,7 +73,7 @@ This allows direct comparison of how architectural expressivity affects training
    This collapse is:  
    - consistent across layers  
    - stable across random seeds  
-   - robust for moderate task difficulty (e.g. `m ≤ 4`)  
+   - robust for moderate task difficulty (e.g. `m ≤ 6`)  
 
    The phenomenon reflects a deep constraint on **learning dynamics**, not the result of explicit regularization or pruning.
 <!-- Optional: centered version with caption -->
