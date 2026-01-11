@@ -219,6 +219,21 @@ nonlinear PDEs.
    powerful models may also use low-dimensional execution manifolds - 
    offering hope for interpretability at scale
 
+## Training Curriculum Determines Solution Geometry
+
+**Mixed learning** (all m values simultaneously):
+- Converges to unified 2-3D execution manifold
+- No forgetting
+- Enables compositional generalization
+
+**Curriculum learning** (progressive m=1→2→3→4):
+- Catastrophic forgetting of earlier m values
+- Fails to discover integrable structure
+
+**Critical observation**: Model cannot learn m=4 from scratch, but 
+curriculum leads to forgetting. Mixed learning resolves this by forcing 
+discovery of shared compositional structure.
+
 
 # 📐 Analysis Tools
 
