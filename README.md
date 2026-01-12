@@ -72,8 +72,9 @@ This allows direct comparison of how architectural expressivity affects training
 
    This collapse is:  
    - consistent across layers  
-   - stable across random seeds  
-   - robust for moderate task difficulty (e.g. `m ≤ 6`)  
+   - the intrinsic dimension is stable across random seeds  
+   - robust for moderate task difficulty (e.g. `m ≤ 6`)
+   - While the orientation of this subspace in raw parameter coordinates is seed-dependent, its dimension and dynamical role are invariant across runs  
 
    The phenomenon reflects a deep constraint on **learning dynamics**, not the result of explicit regularization or pruning.
 <!-- Optional: centered version with caption -->
@@ -170,8 +171,8 @@ This allows direct comparison of how architectural expressivity affects training
 Despite operating in high-dimensional parameter space (d=128), transformers 
 converge to a 2-3D "execution manifold" where:
 
-1. **Dimensional Collapse**: Attention parameters collapse onto this 
-   low-dimensional subspace across all layers, seeds, and moderate task 
+1. **Dimensional Collapse**: Attention parameters collapse onto a 
+   low-dimensional subspace with consistent intrinsic dimensionality (2–3) but no canonical alignment in parameter space, for moderate task 
    difficulties (m ≤ 6)
 
 2. **Approximate Integrability**: When SGD commutators [θ_AB - θ_BA] are 
@@ -273,9 +274,10 @@ python analysis_alignment.py
 
 This work opens several promising directions for future investigation:
 
-- How does the intrinsic dimension of the learned manifold scale with architectural expressivity (e.g., deeper/wider models, larger embedding size)?
-- Can early-training low-dimensional diagnostics (e.g., subspace distance or effective rank) reliably **predict** eventual grokking success?
-- How do these collapse and bubbling phenomena behave as model depth and width increase—does the effective dimension remain bounded, or grow slowly?
+- **Scaling of execution dimensionality** How does the intrinsic dimension of the learned manifold scale with architectural expressivity (e.g., deeper/wider models, larger embedding size)? How do these collapse and bubbling phenomena behave as model depth and width increase—does the effective dimension remain bounded, or grow slowly?
+- **Predictive diagnostics early in training** Can early-training low-dimensional diagnostics (e.g., subspace distance or effective rank) reliably **predict** eventual grokking success?
+- **Robustness beyond linear tasks** In nonlinear tasks, does learning still concentrate dynamics onto a low-dimensional execution manifold (locally or globally), and how should intrinsic dimension be measured in the absence of a global linear subspace?
+- **Micro-task composition into stable circuits** How do multiple micro-tasks discovered during training interact and compose over time? Under what conditions do they merge into stable, reusable execution circuits versus remaining entangled or interfering?
 
 # 📜 Notes
 
