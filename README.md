@@ -5,8 +5,8 @@
 > ### Main Results (TL;DR)
 >
 > - In controlled modular-addition tasks, transformer training dynamics collapse onto a low-dimensional execution manifold (≈2–3D).  
-> - Although SGD updates are strongly non-commutative in ambient parameter space, this non-integrability is confined to directions orthogonal to the execution manifold.  
-> - When projected onto the learned execution subspace, SGD commutators are negligible, indicating approximately integrable dynamics along execution directions.  
+> - SGD commutators are preferentially aligned with the execution subspace (up to 10× random baseline) early in training, with >92% of non-commutativity confined to orthogonal staging directions.
+> - A random-subspace baseline control confirms the geometric alignment is structured, not a dimensionality artifact (exec/random ratio 2–10×).  
 > - Attention “bubbling,” circuit formation, and robustness emerge as geometric consequences of this collapse.  
 > - Sparse autoencoders capture auxiliary routing structure but do not isolate execution itself.
 
@@ -94,35 +94,34 @@ This allows direct comparison of how architectural expressivity affects training
 </p>
    
 
-3. **Non-Integrability of SGD and Commutator Analysis**  
-   Despite the dramatic dimensional collapse, SGD updates remain **strongly non-commutative** in the full high-dimensional parameter space.  
+3. **Non-Integrability of SGD and Commutator Analysis**
+   Despite the dramatic dimensional collapse, SGD updates remain **strongly non-commutative** in the full high-dimensional parameter space.
 
-   We quantify this via **SGD commutators**  
-   `θ_AB - θ_BA` (computed from sequential gradient steps on independent minibatches).  
+   We quantify this via **SGD commutators**
+   `θ_AB - θ_BA` (computed from sequential gradient steps on independent minibatches).
 
-   Key observations:  
-   - Raw commutator norms stay large and frequently **spike**, even late in training  
-   - These spikes correlate only **weakly** with loss fluctuations  
+   Key observations:
+   - Normalized commutator defect `D = ||δ|| / (||ηg_A|| · ||ηg_B||)` **grows throughout training**, even after loss convergence
+   - Defect spikes reaching 100–175× step magnitude indicate persistent non-commutativity
 
-   **Crucially**: When commutators are projected onto the learned execution subspace, their magnitude becomes **negligible**.  
-   → SGD dynamics are **approximately integrable** along execution directions  
-   → Non-integrability is confined to the vast orthogonal “staging” directions.
+   **Crucially**: The execution subspace (built from **PCA of the weight trajectory**) captures a small but **geometrically structured** fraction of commutator energy:
+   - Projection fraction ρ_exec ≈ 0.02–0.13, with **>92% of non-commutativity perpendicular** to the execution manifold
+   - A **random-subspace baseline** confirms this is not a dimensionality artifact: exec/random ratio reaches **9.7× early** in training and **2.1× late**
+   - The decreasing ratio indicates non-commutativity progressively **rotates out** of the execution manifold as the model converges
    <!-- Optional: centered version with caption -->
  <p align="center">
    <img src="plots/figure3_commutator_raw.png" width="70%" alt="PCA of attention weights showing collapse to low dimension">
    <br>
  </p>
 
-4. **Localization of Noncommutativity**  
-   Decomposing commutators into:  
-   - components **within** the execution subspace  
-   - components **orthogonal** to it  
+4. **Localization of Noncommutativity with Random Baseline Control**
+   Decomposing commutators into components **within** and **orthogonal** to the execution subspace, and comparing against random K-dimensional baselines:
 
-   reveals that:  
-   - nearly **all** noncommutativity lives **outside** the execution manifold  
-   - execution dynamics themselves support **near-commuting** updates  
+   - **>92%** of commutator energy is perpendicular to execution directions throughout training, rising to **>98%** late
+   - The execution basis captures **2–10× more** commutator energy than a random subspace of equal dimension
+   - This ratio **decreases over training** (9.7× early → 2.1× late), indicating residual non-commutativity is progressively expelled from execution directions
 
-   This suggests a fundamental geometric role for overparameterization:  
+   This suggests a fundamental geometric role for overparameterization:
    extra dimensions **absorb optimization interference** without disrupting the core execution computation.
    <p align="center">
    <img src="plots/figure4_comm_ratio.png" width="70%" alt="PCA of attention weights showing collapse to low dimension">
@@ -175,8 +174,9 @@ Preliminary experiments confirm the framework extends beyond addition:
 - Dimensionality scales predictably with computational complexity
 - All attention matrices (W_Q, W_K, W_V, W_O) operate in low-dimensional 
   subspaces (4-7D out of d=128)
-- Same geometric principles apply: commutator null space structure, 
-  integrable dynamics, training curriculum effects
+- Same geometric principles apply: commutator localization to orthogonal
+  directions, preferential alignment with execution subspaces relative to
+  random baselines, and training curriculum effects
 
 This suggests execution manifold dimensionality may be predictable from 
 task structure, with implications for understanding how complexity scales 
@@ -191,11 +191,14 @@ converge to a 2-3D "execution manifold" where:
    low-dimensional subspace with consistent intrinsic dimensionality (2–3) but no canonical alignment in parameter space, for moderate task 
    difficulties (m ≤ 6)
 
-2. **Approximate Integrability**: When SGD commutators [θ_AB - θ_BA] are 
-   projected onto the execution manifold, their magnitude becomes negligible
-   
-   → SGD is approximately integrable along execution directions
-   → Non-integrability is confined to orthogonal "staging" directions
+2. **Structured Projection with Random Baseline Control**: When SGD
+   commutators [θ_AB - θ_BA] are projected onto the execution manifold
+   (built from PCA of the weight trajectory), the execution basis captures
+   2–10× more energy than a random subspace of equal dimension
+
+   → >92% of non-commutativity is perpendicular to execution directions
+   → The exec/random ratio decreases over training (9.7× → 2.1×) as
+     non-commutativity rotates out of the execution manifold
 
 3. **Geometric Role of Overparameterization**: The vast orthogonal space 
    absorbs optimization interference without disrupting core computation
