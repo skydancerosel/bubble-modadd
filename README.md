@@ -1,6 +1,6 @@
-# **bubble-modadd** 
+# Low-Dimensional Execution Manifolds in Transformer Learning Dynamics
 
-# *Learning Geometry and Training Dynamics*
+**Paper**: [Low-Dimensional Execution Manifolds in Transformer Learning Dynamics](https://arxiv.org/abs/2602.10496)
 > 
 > ### Main Results (TL;DR)
 >
